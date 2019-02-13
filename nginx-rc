@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    rc: nginx-rc
+  name: nginx-test
+  selector:
+    app: nginx-rc
+  template:
+    metadata:
+      labels:
+        app: nginx-rc
+    spec:
+      name: nginx-svc
+        ports:
+        - containerPort: 80
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-svc
+spec:
+  type: NodePort
+  ports:
+  - name: http
+    nodePort: 32080 # Listening port on Nodes
+    port: 80 # Listening port on ClusterIP
+    targetPort: 80 # Pod’s listening port
+    protocol: TCP
+  selector:
+    app: nginx-rc-pod
