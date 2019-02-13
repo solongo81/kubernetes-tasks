@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Replicaset
+metadata:
+  name: k8-service
+  labels:
+    app: nginx-rs
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-rs
+  template:
+    metadata:
+      labels:
+        app: nginx-rs
+
+    type: NodePort
+      - name: http
+        nodePort: 32080 # Listening port on Nodes
+        port: 81 # Listening port on ClusterIP
+        targetPort: 80 # Pod’s listening port
+    
+
+        
+      
+
+
